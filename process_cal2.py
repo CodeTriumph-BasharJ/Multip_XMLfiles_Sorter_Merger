@@ -14,8 +14,8 @@ import calendar
 def displayData(totalArr, dayS, monthS, startS):
     ind = 0 
     ind2 = 0
-    prev = '' #String variable to store the last even day and month to check with next event.
-    counter = 0 #Loop control counter.
+    prev = '' 
+    counter = 0
     
     #Events dictionary.
     Event={ 'day':totalArr[0],'month':totalArr[1],'year': totalArr[2],
@@ -23,13 +23,12 @@ def displayData(totalArr, dayS, monthS, startS):
     'location': totalArr[7],'circuit': totalArr[8],'broadcaster':totalArr[9],
     'direction':totalArr[10],'timezone':totalArr[11]  }
 
-    
-    #Printing out output to a file.
+   
     sys.stdout = open('output.yaml', 'w')
      
     print("events:")
     
-    #Displaying events.
+    
     while True :
         
         if(dayS[ind] == Event['day'][ind2].replace('\n','') and 
@@ -78,10 +77,10 @@ def displayData(totalArr, dayS, monthS, startS):
 #Function to store and sort events' data.
 def storeData(fileArr1,fileArr2,fileArr3):
     
-    #Arrays/lists to store each event data.
-    day={};month={};year={};Id={};description={};circuit={};locationID={};
-    location={};start={};end={};location_Event={};circuit_Event={};
-    broadcaster_Event={};direction_Event={};timezone_Event={};timezone={}; direction={};broadcaster={};
+    
+    day={}; month={}; year={}; Id={}; description={}; circuit={}; locationID={};
+    location={}; start={}; end={}; location_Event={}; circuit_Event={};
+    broadcaster_Event={}; direction_Event={}; timezone_Event={}; timezone={}; direction={}; broadcaster={};
     broadcasterID={}
     
     storeBroadcasterName(fileArr3,broadcaster)
@@ -104,11 +103,10 @@ def storeData(fileArr1,fileArr2,fileArr3):
     storeIdentifyDirection(direction_Event,locationID,direction)
     storeIdentifyTimezone(timezone_Event,locationID,timezone)
     
-    #Array of arrays of the total needed arrays after storing and modifying data.
+   
     totalArr = [day,month,year,start,end,Id,description,location_Event,circuit_Event,
     broadcaster_Event,direction_Event,timezone_Event]
-    
-    #Sort data.
+   
     SortedDMS(totalArr)
     
     return ''
@@ -140,11 +138,10 @@ def storeIdentifyBroadcast(broadcaster_Event,broadcasterID,broadcaster):
     for item in broadcasterID:
         ind = ind + 1
         
-        #Checking if there is only one broadcaster to display and if not separate them.
+      
         if(broadcasterID[ind] != None and (len(broadcasterID[ind]) == 5)):
             broadcaster_Event[ind]= broadcaster[int(broadcasterID[ind][2:]) - 1]
-        
-        #Separate multiple broacasters.
+       
         elif(len(broadcasterID[ind]) > 5):
             ind2 = 4 
             ind3 = 2 
@@ -187,7 +184,7 @@ def SortedDMS(totalArr):
     monthSorted={}
     startSorted={}
 
-    #Arrays/lists to sotre the given specified dates.
+  
     startDate = sys.argv[1].replace('--start=','')
     endDate = sys.argv[2].replace('--end=','')
     Sdate = time.strptime(startDate[5:],"%m/%d")
@@ -196,14 +193,14 @@ def SortedDMS(totalArr):
     for item in totalArr[0]:
         ind = ind + 1
 
-        #Comapring the events day and month with the given specifed date range to display.
-        if time.strptime(f"{totalArr[1][ind]}/{totalArr[0][ind]}","%m/%d") >= Sdate and time.strptime(f"{totalArr[1][ind]}/{totalArr          [0][ind]}","%m/%d") <= Edate:
+        
+        if time.strptime(f"{totalArr[1][ind]}/{totalArr[0][ind]}","%m/%d") >= Sdate and time.strptime(f"{totalArr[1][ind]}/{totalArr[0][ind]}","%m/%d") <= Edate:
          daySorted[ind2] = totalArr[0][ind]
          monthSorted[ind2] = totalArr[1][ind]
          startSorted[ind2] = totalArr[3][ind]
          ind2 = ind2 + 1
     
-    #In case the given date doesn't specify any range of events, the program is terminated and an empty events' list is shown.
+    
     if len(daySorted) != 0:
         sortData(daySorted,monthSorted,startSorted)
         displayData(totalArr,daySorted,monthSorted,startSorted)
@@ -546,7 +543,7 @@ def readFile():
     
     return ''
 
-#Main function.
+#main function.
 def main():
 
     #Read files.
